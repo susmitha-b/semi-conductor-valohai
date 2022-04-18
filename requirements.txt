@@ -16,3 +16,4 @@ numpy==1.19.5
     #   opt-einsum
     #   tensorboard
     #   tensorflow
+imblearn==0.0
