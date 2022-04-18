@@ -54,12 +54,11 @@ def main():
     data = remove_collinear_features(data,0.70)
         
     # separating the dependent and independent data
-    x = data.iloc[:,:306]
-    y = data["Pass/Fail"]
+    x = data.iloc[:,data.columns != 'Pass/Fail']
+    y = data.iloc[:, data.columns == 'Pass/Fail']
         
     print('Preprocessing data')
-    oversample = SMOTE()
-    x_resample, y_resample  = oversample.fit_resample(x, y)
+    x_resample, y_resample  = SMOTE(random_state=1).fit_sample(x, y.values.ravel())
     #x_train, x_test = x_train / 255.0, x_test / 255.0
     x_train, x_test, y_train, y_test = train_test_split(x_resample, y_resample, test_size = 0.3, random_state = 1)
     
