@@ -50,7 +50,7 @@ def main():
         x = x.drop(columns=drops)
 
         return x       
-            
+    data = data.drop(columns = ['Time'], axis = 1)        
     data = remove_collinear_features(data,0.70)
         
     # separating the dependent and independent data
