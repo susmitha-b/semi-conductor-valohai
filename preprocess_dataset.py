@@ -44,10 +44,10 @@ def main():
                    drop_cols.append(col.values[0])
 
             # Drop one of each pair of correlated columns
-         drops = set(drop_cols)
-         x = x.drop(columns=drops)
+        drops = set(drop_cols)
+        x = x.drop(columns=drops)
 
-         return x       
+        return x       
             
     data = remove_collinear_features(data,0.70)
         
