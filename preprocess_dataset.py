@@ -59,7 +59,7 @@ def main():
         
     print('Preprocessing data')
     oversample = SMOTE()
-    x_resample, y_resample  = oversample.fit_resample(x, y.values.ravel())
+    x_resample, y_resample  = oversample.fit_resample(x, y)
     #x_train, x_test = x_train / 255.0, x_test / 255.0
     x_train, x_test, y_train, y_test = train_test_split(x_resample, y_resample, test_size = 0.3, random_state = 1)
     
