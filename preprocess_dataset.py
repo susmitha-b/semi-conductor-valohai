@@ -58,7 +58,7 @@ def main():
     y = data.iloc[:, data.columns == 'Pass/Fail']
         
     print('Preprocessing data')
-    x_resample, y_resample  = SMOTE(random_state=1).fit_sample(x, y.values.ravel())
+    x_resample, y_resample  = SMOTE(random_state=1).fit_resample(x, y.values.ravel())
     #x_train, x_test = x_train / 255.0, x_test / 255.0
     x_train, x_test, y_train, y_test = train_test_split(x_resample, y_resample, test_size = 0.3, random_state = 1)
     
