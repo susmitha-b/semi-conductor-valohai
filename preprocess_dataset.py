@@ -41,7 +41,7 @@ def main():
                 # If correlation exceeds the threshold
                 if val >= threshold:
                 # Print the correlated features and the correlation value
-                   print(col.values[0], "|", row.values[0], "|", round(val[0][0], 2))
+                   #print(col.values[0], "|", row.values[0], "|", round(val[0][0], 2))
                    drop_cols.append(col.values[0])
 
             # Drop one of each pair of correlated columns
@@ -54,7 +54,7 @@ def main():
         
     # separating the dependent and independent data
     x = data.iloc[:,:306]
-    y = data["Pass_Fail"]
+    y = data["Pass/Fail"]
         
     print('Preprocessing data')
     #x_train, x_test = x_train / 255.0, x_test / 255.0
