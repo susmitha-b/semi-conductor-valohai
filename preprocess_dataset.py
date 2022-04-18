@@ -10,7 +10,6 @@ def main():
     valohai.prepare(
         step='preprocess-dataset',
         image='python:3.9',
-        command='pip install -r requirements.txt'
         default_inputs={
             'dataset': 'https://depprocureformstorage.blob.core.windows.net/semicond-yield/input/uci-secom.csv',
         },
