@@ -59,12 +59,13 @@ def main():
         
     print('Preprocessing data')
     #x_train, x_test = x_train / 255.0, x_test / 255.0
-    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.3, random_state = 1)
-    sm = SMOTE(random_state=42)
-    x_train, y_train = sm.fit_resample(x_train, y_train.values.ravel())
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.3, random_state = 0)
     sc = StandardScaler()
     x_train = sc.fit_transform(x_train)
     x_test = sc.transform(x_test)
+    sm = SMOTE(random_state=42)
+    x_train, y_train = sm.fit_resample(x_train, y_train.values.ravel())
+ 
     # Write output files to Valohai outputs directory
     # This enables Valohai to version your data
     # and upload output it to the default data store
