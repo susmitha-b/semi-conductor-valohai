@@ -3,6 +3,7 @@
     name: Preprocess Dataset
     image: python:3.6
     command:
+      - python -m pip install --upgrade pip
       - pip install -r requirements.txt
       - python preprocess_dataset.py
     inputs:
