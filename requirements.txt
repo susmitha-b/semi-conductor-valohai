@@ -8,3 +8,11 @@ valohai-yaml==0.15.0
     # via
     #   valohai-papi
     #   valohai-utils
+numpy==1.19.5
+    # via
+    #   -r requirements.in
+    #   h5py
+    #   keras-preprocessing
+    #   opt-einsum
+    #   tensorboard
+    #   tensorflow
