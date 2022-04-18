@@ -12,7 +12,7 @@ def main():
         image='python:3.9',
         command = 'pip install -r requirements.txt' , 'python ./preprocess_dataset.py'
         default_inputs={
-            'dataset': 'https://depprocureformstorage.blob.core.windows.net/semicond-yield/input/uci-secom.csv',
+            'dataset': 'https://depprocureformstorage.blob.core.windows.net/semicond-yield/input/uci-secom.csv'
         },
     )
 
@@ -65,9 +65,11 @@ def main():
     # and upload output it to the default data store
 
     print('Saving preprocessed data')
-    path = valohai.outputs().path('preprocessed_yield_uci.csv')
-    np.savez_compressed(path, x_train=x_train, y_train=y_train, x_test=x_test, y_test=y_test)
-
-
+    path = valohai.outputs("preprocessed_yield_uci").path()
+    x_train.to_csv(path)
+    x_test.to_csv(path)
+    y_train.to_csv(path)
+    y_test.to_csv(path)
+    
 if __name__ == '__main__':
     main()
