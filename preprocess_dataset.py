@@ -72,13 +72,13 @@ def main():
 
     print('Saving preprocessed data')
     path_x_train = valohai.outputs("preprocessed_yield_uci").path('x_train.csv')
-    x_train.to_csv(path_x_train)
+    x_train.tofile(path_x_train,sep=',')
     path_x_test = valohai.outputs("preprocessed_yield_uci").path('x_test.csv')
-    x_test.to_csv(path_x_test)
+    x_test.tofile(path_x_test,sep=',')
     path_y_train = valohai.outputs("preprocessed_yield_uci").path('y_train.csv')
-    y_train.to_csv(path_y_train)
+    y_train.tofile(path_y_train,sep=',')
     path_y_test = valohai.outputs("preprocessed_yield_uci").path('y_test.csv')
-    y_test.to_csv(path_y_test)
+    y_test.tofile(path_y_test,sep=',')
     
 if __name__ == '__main__':
     main()
