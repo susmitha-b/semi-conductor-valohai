@@ -8,8 +8,9 @@ def main():
     # the Valohai command-line client by running `valohai yaml step preprocess_dataset.py`
 
     valohai.prepare(
-        step='preprocess-dataset',
+        step='Preprocess Dataset',
         image='python:3.9',
+        command = 'pip install -r requirements.txt' , 'python ./preprocess_dataset.py'
         default_inputs={
             'dataset': 'https://depprocureformstorage.blob.core.windows.net/semicond-yield/input/uci-secom.csv',
         },
