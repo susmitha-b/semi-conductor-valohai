@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 import valohai
 from imblearn.over_sampling import SMOTE
-
+from sklearn.preprocessing import StandardScaler
 
 def main():
     # valohai.prepare enables us to update the valohai.yaml configuration file with
