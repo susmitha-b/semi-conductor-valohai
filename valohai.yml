@@ -1,10 +1,10 @@
 ---
 - step:
-    name: preprocess_data
+    name: Preprocess Dataset
     image: python:3.6
     command:
       - pip install -r requirements.txt
-      - python preprocess_data.py
+      - python preprocess_dataset.py
     inputs:
       - name: dataset
         default: https://depprocureformstorage.blob.core.windows.net/semicond-yield/input/uci-secom.csv
