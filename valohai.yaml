@@ -9,7 +9,7 @@
       - name: dataset
       - default: https://depprocureformstorage.blob.core.windows.net/semicond-yield/input/uci-secom.csv
 
--step:
+- step:
     name: train-model
     image: valohai/sklearn:1.0
     command:
