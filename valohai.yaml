@@ -38,6 +38,6 @@
         default: datum://01803ca5-51fe-665d-80fb-483245693846
       - name: dataset3
         default: datum://01803ca5-505f-996f-c4c6-0f9c91118a09
-      - name: datset4
+      - name: dataset4
         default: datum://01803ca5-538f-8997-9202-597921739ea8
 
