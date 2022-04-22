@@ -14,7 +14,7 @@
     image: valohai/sklearn:1.0
     command:
       - pip install -r requirements.txt
-      - python preprocess_dataset.py
+      - python ./train.py {parameters}
     inputs:
       - name: dataset1
         default: datum://01803ca5-4e35-f0d4-beb6-4b7031282885
