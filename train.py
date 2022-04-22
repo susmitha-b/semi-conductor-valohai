@@ -1,9 +1,12 @@
-from imblearn.over_sampling import SMOTE
+import uuid
+
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
+import xgboost
+from xgboost.sklearn import XGBClassifier
 import valohai
 
 def main():
@@ -12,51 +15,59 @@ def main():
         step='train-model',
         image='valohai/sklearn:1.0',
         default_inputs={
-            'dataset1': 'datum://01803c30-a8a1-4530-bda1-6eee87c9a3fa',
+          'dataset1': 'datum://01803ca5-4e35-f0d4-beb6-4b7031282885',
+          'dataset2': 'datum://01803ca5-51fe-665d-80fb-483245693846',
+          'dataset3': 'datum://01803ca5-505f-996f-c4c6-0f9c91118a09',
+          'dataset4': 'datum://01803ca5-538f-8997-9202-597921739ea8',
         },
         default_parameters={
-            'learning_rate': 0.001,
-            'epochs': 5,
+          'random_state': 1,
+          'max_depth': 4,
+          'n_jobs':4,
+          'cv':2,
+          'n_estimators':100,
         },
     )
   
-  x_resample, y_resample  = SMOTE(random_state=1).fit_sample(x, y.values.ravel())
+  x_train = pd.read_csv(valohai.inputs('dataset1').path())
+  y_train = pd.read_csv(valohai.inputs('dataset2').path())
+  x_test = pd.read_csv(valohai.inputs('dataset3').path())
+  y_test = pd.read_csv(valohai.inputs('dataset4').path())
+  
+  xgb = XGBClassifier(random_state=1)
+  xgb.fit(x_train, y_train)
+  y_pred1 = xgb.predict(x_test)
+  test_accuracy_xgb = xgb.score(x_test,y_test)*100
+  
+  rf = RandomForestClassifier(n_estimators=valohai.parameters('n_estimators').value, random_state=valohai.parameters('random_state').value,verbose=0)
+  rf.fit(x_train, y_train)
+  y_pred2 = rf.predict(x_test)
+  test_accuracy_rf = rf.score(x_test,y_test)*100
+  
+  lr = LogisticRegression(random_state=1)
+  lr.fit(x_train, y_train) 
+  y_pred3 = lr.predict(x_test)
+  test_accuracy_lr = lr.score(x_test,y_test)*100
+  
+  with valohai.logger() as logger:
+      logger.log('test_accuracy_xgb', test_accuracy_xgb)
+      logger.log('test_accuracy_rf', test_accuracy_rf)
+      logger.log('test_accuracy_lr', test_accuracy_lr)
+      
+  # printing the confusion matrix
+  #cm = confusion_matrix(y_test_os, y_pred)
+  #sns.heatmap(cm, annot = True, cmap = 'rainbow')
+  #print("Accuracy: ", lr.score(x_test_os,y_test_os)*100)
+  #cm = confusion_matrix(y_test_os, y_pred)
+  #sns.heatmap(cm, annot = True, cmap = 'rainbow')
+  suffix = uuid.uuid4()
+  output_path1 = valohai.outputs().path('model_xgb.h5')
+  output_path2 = valohai.outputs().path('model_rf.h5')
+  output_path3 = valohai.outputs().path('model_lr.h5')
+  xgb.save(output_path1)
+  rf.save(output_path2)
+  lr.save(output_path3)
 
-#print(x_resample.shape)
-#print(y_resample.shape)
 
-x_train_os, x_test_os, y_train_os, y_test_os = train_test_split(x, y, test_size = 0.3, random_state = 1)
-
-print(x_train_os.shape)
-print(y_train_os.shape)
-print(x_test_os.shape)
-print(y_test_os.shape)
-
-from sklearn.preprocessing import StandardScaler
-
-# creating a standard scaler
-sc = StandardScaler()
-
-sc = StandardScaler()
-x_train_os = sc.fit_transform(x_train_os)
-x_test_os = sc.transform(x_test_os)
-
-model = RandomForestClassifier(n_estimators=100, random_state=1,verbose=0 )
-model.fit(x_train_os, y_train_os)
-#scores_prediction = model.decision_function(x_train)
-y_pred = model.predict(x_test_os)
-
-print("Accuracy: ", model.score(x_test_os,y_test_os)*100)
-
-# printing the confusion matrix
-cm = confusion_matrix(y_test_os, y_pred)
-sns.heatmap(cm, annot = True, cmap = 'rainbow')
-
-lr = LogisticRegression(random_state=1)
-lr.fit(x_train_os, y_train_os) 
-y_pred = lr.predict(x_test_os)
-
-print("Accuracy: ", lr.score(x_test_os,y_test_os)*100)
-
-cm = confusion_matrix(y_test_os, y_pred)
-sns.heatmap(cm, annot = True, cmap = 'rainbow')
+if __name__ == '__main__':
+    main()
