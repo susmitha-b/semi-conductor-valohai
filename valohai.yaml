@@ -7,7 +7,7 @@
       - python preprocess_dataset.py
     inputs:
       - name: dataset
-      - default: https://depprocureformstorage.blob.core.windows.net/semicond-yield/input/uci-secom.csv
+        default: https://depprocureformstorage.blob.core.windows.net/semicond-yield/input/uci-secom.csv
 
 - step:
     name: train-model
