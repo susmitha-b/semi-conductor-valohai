@@ -13,7 +13,7 @@
     name: train-model
     image: valohai/sklearn:1.0
     command:
-      - pip install valohai-utils
+      - pip install -r requirements.txt
       - python ./train.py {parameters}
     parameters:
       - name: random_state
