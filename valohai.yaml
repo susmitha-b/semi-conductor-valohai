@@ -7,4 +7,36 @@
       - python preprocess_dataset.py
     inputs:
       - name: dataset
-        default: https://depprocureformstorage.blob.core.windows.net/semicond-yield/input/uci-secom.csv
+      - default: https://depprocureformstorage.blob.core.windows.net/semicond-yield/input/uci-secom.csv
+
+-step:
+    name: train-model
+    image: valohai/sklearn:1.0
+    command:
+      - pip install -r requirements.txt
+      - python preprocess_dataset.py
+    inputs:
+      - name: dataset1
+        default: datum://01803ca5-4e35-f0d4-beb6-4b7031282885
+      - name: dataset2
+        default: datum://01803ca5-51fe-665d-80fb-483245693846
+      - name: dataset3
+        default: datum://01803ca5-505f-996f-c4c6-0f9c91118a09
+      - name: datset4
+        default: datum://01803ca5-538f-8997-9202-597921739ea8
+    parameters:
+      - name: random_state
+        default: 1
+        type: integer
+      - name: max_depth
+        default: 4
+        type: integer
+      - name: n_jobs
+        default: 4
+        type: integer
+      - name: n_estimators
+        default: 100
+        type: integer
+      - name: cv
+        default: 2
+        type: integer
