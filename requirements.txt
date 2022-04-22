@@ -17,3 +17,4 @@ numpy==1.19.5
     #   tensorboard
     #   tensorflow
 imblearn==0.0
+xgboost==1.6.0
