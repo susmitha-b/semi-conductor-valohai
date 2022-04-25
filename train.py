@@ -28,10 +28,10 @@ def main():
         },
     )
   
-  x_train = pd.read_csv(valohai.inputs('dataset1').path())
-  y_train = pd.read_csv(valohai.inputs('dataset2').path())
-  x_test = pd.read_csv(valohai.inputs('dataset3').path())
-  y_test = pd.read_csv(valohai.inputs('dataset4').path())
+  x_train = pd.read_csv(valohai.inputs('dataset1').paths())
+  y_train = pd.read_csv(valohai.inputs('dataset2').paths())
+  x_test = pd.read_csv(valohai.inputs('dataset3').paths())
+  y_test = pd.read_csv(valohai.inputs('dataset4').paths())
   
   xgb = XGBClassifier(random_state=1)
   xgb.fit(x_train, y_train)
