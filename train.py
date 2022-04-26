@@ -19,13 +19,6 @@ def main():
           'dataset3': 'datum://01803ca5-505f-996f-c4c6-0f9c91118a09',
           'dataset4': 'datum://01803ca5-538f-8997-9202-597921739ea8',
         },
-        default_parameters={
-          'random_state': 1,
-          'max_depth': 4,
-          'n_jobs':4,
-          'cv':2,
-          'n_estimators':100,
-        },
     )
   
   x_train = pd.read_csv(valohai.inputs('dataset1').path())
@@ -40,7 +33,7 @@ def main():
   y_pred1 = clf.predict(x_test)
   test_accuracy_xgb = clf.score(x_test,y_test_repl)*100
   
-  rf = RandomForestClassifier(n_estimators=valohai.parameters('n_estimators').value, random_state=valohai.parameters('random_state').value,verbose=0)
+  rf = RandomForestClassifier(n_estimators=100, random_state=1,verbose=0)
   rf.fit(x_train, y_train)
   y_pred2 = rf.predict(x_test)
   test_accuracy_rf = rf.score(x_test,y_test)*100
