@@ -78,7 +78,7 @@ def main():
     path_y_train = valohai.outputs("preprocessed_yield_uci").path('y_train.csv')
     y_train.tofile(path_y_train,sep=',')
     path_y_test = valohai.outputs("preprocessed_yield_uci").path('y_test.csv')
-    y_test.to_csv(path_y_test)
+    y_test.tofile(path_y_test,sep=',')
     
 if __name__ == '__main__':
     main()
