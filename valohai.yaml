@@ -11,7 +11,7 @@
 
 - step:
     name: train-model
-    image: valohai/sklearn:1.0.2
+    image: valohai/sklearn
     command:
       - pip install -r requirements.txt
       - python ./train.py {parameters}
