@@ -26,12 +26,12 @@ def main():
   x_test = pd.read_csv(valohai.inputs('dataset3').path())
   y_test = pd.read_csv(valohai.inputs('dataset4').path())
   
-  y_train_repl=y_train.replace(-1,0)
-  y_test_repl=y_test.replace(-1,0)
-  clf = XGBClassifier(max_depth=6,n_estimators=100)
-  clf.fit(x_train, y_train_repl)
-  y_pred1 = clf.predict(x_test)
-  test_accuracy_xgb = clf.score(x_test,y_test_repl)*100
+  #y_train_repl=y_train.replace(-1,0)
+  #y_test_repl=y_test.replace(-1,0)
+  #clf = XGBClassifier(max_depth=6,n_estimators=100)
+  #clf.fit(x_train, y_train_repl)
+  #y_pred1 = clf.predict(x_test)
+  #test_accuracy_xgb = clf.score(x_test,y_test_repl)*100
   
   rf = RandomForestClassifier(n_estimators=100, random_state=1,verbose=0)
   rf.fit(x_train, y_train)
@@ -44,7 +44,7 @@ def main():
   test_accuracy_lr = lr.score(x_test,y_test)*100
   
   with valohai.logger() as logger:
-      logger.log('test_accuracy_xgb', test_accuracy_xgb)
+      #logger.log('test_accuracy_xgb', test_accuracy_xgb)
       logger.log('test_accuracy_rf', test_accuracy_rf)
       logger.log('test_accuracy_lr', test_accuracy_lr)
       
@@ -55,10 +55,10 @@ def main():
   #cm = confusion_matrix(y_test_os, y_pred)
   #sns.heatmap(cm, annot = True, cmap = 'rainbow')
   suffix = uuid.uuid4()
-  output_path1 = valohai.outputs().path('model_xgb.h5')
+  #output_path1 = valohai.outputs().path('model_xgb.h5')
   output_path2 = valohai.outputs().path('model_rf.h5')
   output_path3 = valohai.outputs().path('model_lr.h5')
-  xgb.save(output_path1)
+  #xgb.save(output_path1)
   rf.save(output_path2)
   lr.save(output_path3)
 
