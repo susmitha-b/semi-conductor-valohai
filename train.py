@@ -35,7 +35,7 @@ def main():
   
   y_train_repl=y_train.replace(-1,0)
   y_test_repl=y_test.replace(-1,0)
-  clf = xgb.XGBClassifier(max_depth=6,n_estimators=100)
+  clf = XGBClassifier(max_depth=6,n_estimators=100)
   clf.fit(x_train, y_train_repl)
   y_pred1 = clf.predict(x_test)
   test_accuracy_xgb = clf.score(x_test,y_test_repl)*100
