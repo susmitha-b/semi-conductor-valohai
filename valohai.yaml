@@ -15,22 +15,6 @@
     command:
       - pip install -r requirements.txt
       - python ./train.py {parameters}
-    parameters:
-      - name: random_state
-        default: 1
-        type: integer
-      - name: max_depth
-        default: 4
-        type: integer
-      - name: n_jobs
-        default: 4
-        type: integer
-      - name: n_estimators
-        default: 100
-        type: integer
-      - name: cv
-        default: 2
-        type: integer
     inputs:
       - name: dataset1
         default: datum://01803ca5-4e35-f0d4-beb6-4b7031282885
