@@ -33,10 +33,12 @@ def main():
   x_test = pd.read_csv(valohai.inputs('dataset3').path())
   y_test = pd.read_csv(valohai.inputs('dataset4').path())
   
-  xgb = XGBClassifier(random_state=1)
-  xgb.fit(x_train, y_train)
-  y_pred1 = xgb.predict(x_test)
-  test_accuracy_xgb = xgb.score(x_test,y_test)*100
+  y_train_repl=y_train.replace(-1,0)
+  y_test_repl=y_test.replace(-1,0)
+  clf = xgb.XGBClassifier(max_depth=6,n_estimators=100)
+  clf.fit(x_train, y_train_repl)
+  y_pred1 = clf.predict(x_test)
+  test_accuracy_xgb = clf.score(x_test,y_test_repl)*100
   
   rf = RandomForestClassifier(n_estimators=valohai.parameters('n_estimators').value, random_state=valohai.parameters('random_state').value,verbose=0)
   rf.fit(x_train, y_train)
