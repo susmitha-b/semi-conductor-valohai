@@ -72,16 +72,21 @@ def main():
     # Write output files to Valohai outputs directory
     # This enables Valohai to version your data
     # and upload output it to the default data store
-
+    x_train = pd.DataFrame(x_train)
+    x_test = pd.DataFrame(x_test)
+    y_train = pd.DataFrame(y_train)
+    y_test=pd.DataFrame(y_test)
+  
+    
     print('Saving preprocessed data')
     path_x_train = valohai.outputs("preprocessed_yield_uci").path('x_train.csv')
-    x_train.tofile(path_x_train,sep=',')
+    x_train.to_csv(path_x_train,"x_train.csv")
     path_x_test = valohai.outputs("preprocessed_yield_uci").path('x_test.csv')
-    x_test.tofile(path_x_test,sep=',')
+    x_test.to_csv(path_x_test,"x_test.csv")
     path_y_train = valohai.outputs("preprocessed_yield_uci").path('y_train.csv')
-    y_train.tofile(path_y_train,sep=',')
+    y_train.to_csv(path_y_train,"y_train.csv")
     path_y_test = valohai.outputs("preprocessed_yield_uci").path('y_test.csv')
-    y_test.tofile(path_y_test,sep=',')
+    y_test.to_csv(path_y_test,"y_test.csv")
     
 if __name__ == '__main__':
     main()
