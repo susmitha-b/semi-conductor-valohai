@@ -64,7 +64,10 @@ def main():
     sc = StandardScaler()
     x_train = sc.fit_transform(x_train)
     x_test = sc.transform(x_test)
-    
+    print(x_train.shape)
+    print(y_train.shape)
+    print(x_test.shape)
+    print(y_test.shape)
  
     # Write output files to Valohai outputs directory
     # This enables Valohai to version your data
