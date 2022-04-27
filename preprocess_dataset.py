@@ -42,12 +42,13 @@ def main():
 
     print("Lasso picked "+ str(sum(coef!= 0))+ " features and eliminated the other "+ str(sum(coef == 0))+" variables")
     
-    index=[]
+    column=[]
+    selected_columns=[]
     for i in range(len(coef)):
         if coef[i]!=0:
-            index.append(i)
-    print("Selected columns from LassoCV is: ",index)
-    selected_columns = ['21','90','160','161','162']
+            column.append(i)
+    print("Selected columns from LassoCV is: ",column)
+    selected_columns = [str(x) for x in column]
     X = pd.DataFrame(X, columns=selected_columns)
     
     print(X.info)
