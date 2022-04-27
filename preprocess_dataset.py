@@ -33,7 +33,7 @@ def main():
     y = data["Pass/Fail"]
     
     print('Feature Selection using LassoCV started')
-    reg=LassoCV()
+    reg=LassoCV(normalize='deprecated')
     reg.fit(X,y)
     print(reg.get_params(deep=True))
     print("Best Alpha using built-in LassoCV is: %f" % reg.alpha_)
