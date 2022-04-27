@@ -19,10 +19,10 @@ def main():
         },
     )
   
-  x_train_dup = pd.read_csv(valohai.inputs('dataset1').path())
-  y_train_dup = pd.read_csv(valohai.inputs('dataset2').path())
-  x_test_dup = pd.read_csv(valohai.inputs('dataset3').path())
-  y_test_dup = pd.read_csv(valohai.inputs('dataset4').path())
+  x_train_dup = valohai.inputs('dataset1').path()
+  y_train_dup = valohai.inputs('dataset2').path()
+  x_test_dup = valohai.inputs('dataset3').path()
+  y_test_dup = valohai.inputs('dataset4').path()
   
   x_train = pd.read_csv(x_train_dup,index_col=0)
   y_train = pd.read_csv(y_train_dup,index_col=0)
