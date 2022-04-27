@@ -1,9 +1,9 @@
 import uuid
 
-import pickle
 import pandas as pd
 from sklearn.metrics import confusion_matrix,accuracy_score
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.externals import joblib
 import valohai
 
 def main():
@@ -19,10 +19,15 @@ def main():
         },
     )
   
-  x_train = pd.read_csv(valohai.inputs('dataset1').path(),index_col=0)
-  y_train = pd.read_csv(valohai.inputs('dataset2').path(),index_col=0)
-  x_test = pd.read_csv(valohai.inputs('dataset3').path(),index_col=0)
-  y_test = pd.read_csv(valohai.inputs('dataset4').path(),index_col=0)
+  x_train_dup = pd.read_csv(valohai.inputs('dataset1').path())
+  y_train_dup = pd.read_csv(valohai.inputs('dataset2').path())
+  x_test_dup = pd.read_csv(valohai.inputs('dataset3').path())
+  y_test_dup = pd.read_csv(valohai.inputs('dataset4').path())
+  
+  x_train = pd.read_csv(x_train_dup,index_col=0)
+  y_train = pd.read_csv(y_train_dup,index_col=0)
+  x_test = pd.read_csv(x_test_dup,index_col=0)
+  y_test = pd.read_csv(y_test_dup,index_col=0)
   
   rf = RandomForestClassifier(n_estimators=100, random_state=1,verbose=0)
   rf.fit(x_train, y_train)
@@ -42,7 +47,7 @@ def main():
   #sns.heatmap(cm, annot = True, cmap = 'rainbow')
   suffix = uuid.uuid4()
   output_path = valohai.outputs().path('model_rf.pckl')
-  pickle.dump(rf, open(output_path, 'wb'))
+  joblib.dump(rf, open(output_path, 'wb'))
   #rf.save(output_path)
 
 if __name__ == '__main__':
