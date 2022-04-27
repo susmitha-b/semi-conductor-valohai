@@ -13,7 +13,6 @@
     name: train-model
     image: valohai/notebook:sklearn-0.24.2
     command:
-      - -m pip install --upgrade pip
       - pip install -r requirements.txt
       - python ./train.py {parameters}
     inputs:
