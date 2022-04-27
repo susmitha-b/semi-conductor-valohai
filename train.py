@@ -18,10 +18,10 @@ def main():
         },
     )
   
-  x_train = pd.read_csv(valohai.inputs('dataset1').path())
-  y_train = pd.read_csv(valohai.inputs('dataset2').path())
-  x_test = pd.read_csv(valohai.inputs('dataset3').path())
-  y_test = pd.read_csv(valohai.inputs('dataset4').path())
+  x_train = pd.read_csv(valohai.inputs('dataset1').path(),index_col=0)
+  y_train = pd.read_csv(valohai.inputs('dataset2').path(),index_col=0)
+  x_test = pd.read_csv(valohai.inputs('dataset3').path(),index_col=0)
+  y_test = pd.read_csv(valohai.inputs('dataset4').path(),index_col=0)
   
   rf = RandomForestClassifier(n_estimators=100, random_state=1,verbose=0)
   rf.fit(x_train, y_train)
