@@ -36,7 +36,7 @@ def main():
   y_pred = rf.predict(x_test)
   print('Accuracy: %.3f' % accuracy_score(y_test, y_pred))
   test_accuracy_rf = accuracy_score(y_test, y_pred)
-  test_accuarcy_rf_score=rf.score(x_test,y_test)*100
+  test_accuracy_rf_score=rf.score(x_test,y_test)*100
   
   with valohai.logger() as logger:
       logger.log('test_accuracy_rf', test_accuracy_rf)
