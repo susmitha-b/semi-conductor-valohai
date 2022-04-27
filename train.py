@@ -11,10 +11,10 @@ def main():
         step='train-model',
         image='valohai/sklearn:1.0',
         default_inputs={
-          'dataset1': 'datum://018069d3-4b89-f0cf-f815-c51e53838660',
-          'dataset2': 'datum://018069d3-4eaa-5d5a-1f7e-60812c5add84',
-          'dataset3': 'datum://018069d3-4d1c-1722-a671-703994d1ea2c',
-          'dataset4': 'datum://018069d3-5044-638c-ba9b-16dceb277d26',
+          'dataset1': 'datum://018069f2-73d9-608d-6ea6-50449d188804',
+          'dataset2': 'datum://018069f2-771f-7265-9e83-479a47f9a893',
+          'dataset3': 'datum://018069f2-7561-9ef9-50b9-f4fefd2476a2',
+          'dataset4': 'datum://018069f2-78bc-5568-d2ab-ca99305ed284',
         },
     )
   
