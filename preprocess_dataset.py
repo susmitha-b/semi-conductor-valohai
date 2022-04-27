@@ -25,8 +25,8 @@ def main():
 
     print('Loading data')
     data = pd.read_csv(valohai.inputs('dataset').path())
-    check = data.isnull().any().any()
-    data = data.drop(columns = ['Time'], axis = 1)    
+    data = data.drop(columns = ['Time'], axis = 1)
+    check = data.isnull().any().any()    
     if check:
        data = data.replace(np.NaN, 0)
     X = data.drop(columns=['Pass/Fail'],axis=1)
