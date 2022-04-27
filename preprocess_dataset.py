@@ -31,14 +31,14 @@ def main():
        data = data.replace(np.NaN, 0)
     X = data.drop(columns=['Pass/Fail'],axis=1)
     y = data["Pass/Fail"]
-    print(X.info())
+    print(X.describe())
     print('Feature Selection using LassoCV started')
-    reg=LassoCV()
-    reg.fit(X,y)
-    print(reg.get_params(deep=True))
-    print("Best Alpha using built-in LassoCV is: %f" % reg.alpha_)
-    print("Best score using built-in LassoCV is: %f" %reg.score(X,y))
-    coef=pd.Series(reg.coef_,index=X.columns)
+    model = LassoCV()
+    model.fit(X,y)
+    print(model.get_params(deep=True))
+    print("Best Alpha using built-in LassoCV is: %f" % model.alpha_)
+    print("Best score using built-in LassoCV is: %f" % model.score(X,y))
+    coef=pd.Series(model.coef_,index=X.columns)
 
     print("Lasso picked "+ str(sum(coef!= 0))+ " features and eliminated the other "+ str(sum(coef == 0))+" variables")
     
@@ -47,11 +47,12 @@ def main():
         if coef[i]!=0:
             index.append(i)
     print("Selected columns from LassoCV is: ",index)
-   
-    data1 = pd.DataFrame(X, columns=index)
-    print(data1.info)
+    selected_columns = ['21','90','160','161','162']
+    X = pd.DataFrame(X, columns=selected_columns)
+    
+    print(X.info)
     print("Preparing for Undersampling")
-    lasso_data=pd.concat([data1,y],axis=1)
+    lasso_data=pd.concat([X,y],axis=1)
     failed_tests = np.array(lasso_data[lasso_data['Pass/Fail'] == 1].index)
     no_failed_tests = len(failed_tests)
     print("The number of failed tests(1) in data:",no_failed_tests)
