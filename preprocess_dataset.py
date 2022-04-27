@@ -70,7 +70,7 @@ def main():
     
     undersample_data = lasso_data.iloc[under_sample, :]
     x_us = undersample_data.iloc[:, undersample_data.columns != 'Pass/Fail'] 
-    y_us = undersample_data.iloc[:, undersample_data.columns == 'Pass/Fail']
+    y_us = undersample_data['Pass/Fail']
 
     x_train, x_test, y_train, y_test = train_test_split(x_us, y_us, test_size = 0.2, random_state = 1)
     print(y_test)
