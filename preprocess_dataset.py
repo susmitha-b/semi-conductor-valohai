@@ -73,7 +73,7 @@ def main():
     y_us = undersample_data.iloc[:, undersample_data.columns == 'Pass/Fail']
 
     x_train, x_test, y_train, y_test = train_test_split(x_us, y_us, test_size = 0.2, random_state = 1)
-   
+    print(y_test)
     x_train = pd.DataFrame(x_train)
     x_test = pd.DataFrame(x_test)
     y_train = pd.DataFrame(y_train)
