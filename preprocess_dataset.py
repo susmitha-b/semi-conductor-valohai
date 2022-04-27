@@ -1,9 +1,11 @@
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
-import valohai
 from imblearn.over_sampling import SMOTE
 from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LassoCV
+import valohai
+
 
 def main():
     # valohai.prepare enables us to update the valohai.yaml configuration file with
@@ -24,51 +26,60 @@ def main():
     print('Loading data')
     data = pd.read_csv(valohai.inputs('dataset').path())
     check = data.isnull().any().any()
+    data = data.drop(columns = ['Time'], axis = 1)    
     if check:
        data = data.replace(np.NaN, 0)
-    def remove_collinear_features(x, threshold):
-        corr_matrix = x.corr()
-        iters = range(len(corr_matrix.columns) - 1)
-        drop_cols = []
+    X = data.drop(columns=['Pass/Fail'],axis=1)
+    y = data["Pass/Fail"]
+    
+    print('Feature Selection using LassoCV started')
+    reg=LassoCV()
+    reg.fit(X,y)
+    print("Best Alpha using built-in LassoCV is: %f" % reg.alpha_)
+    print("Best score using built-in LassoCV is: %f" %reg.score(X,y))
+    coef=pd.Series(reg.coef_,index=X.columns)
 
-        # Iterate through the correlation matrix and compare correlations
-        for i in iters:
-            for j in range(i+1):
-                item = corr_matrix.iloc[j:(j+1), (i+1):(i+2)]
-                col = item.columns
-                row = item.index
-                val = abs(item.values)
+    print("Lasso picked "+ str(sum(coef!= 0))+ " features and eliminated the other "+ str(sum(coef == 0))+" variables")
+    
+    index=[]
+    for i in range(len(coef)):
+        if coef[i]!=0:
+            index.append(i)
+    print("Selected columns from LassoCV is: ",index)
+    data1 = pd.DataFrame(X, columns=index)
+    
+    print("Preparing for Undersampling")
+    lasso_data=pd.concat([data1,y],axis=1)
+    failed_tests = np.array(lasso_data[lasso_data['Pass/Fail'] == 1].index)
+    no_failed_tests = len(failed_tests)
+    print("The number of failed tests(1) in data:",no_failed_tests)
+    
+    normal_indices = lasso_data[lasso_data['Pass/Fail'] == -1]
+    no_normal_indices = len(normal_indices)
+    print("The number of passed tests(-1) in data:",no_normal_indices)
+    
+    random_normal_indices = np.random.choice(no_normal_indices, size = no_failed_tests, replace = True)
+    random_normal_indices = np.array(random_normal_indices)
+    print("The number of randomly choosen passed tests(-1) in data:",len(random_normal_indices))
 
-                # If correlation exceeds the threshold
-                if val >= threshold:
-                # Print the correlated features and the correlation value
-                   #print(col.values[0], "|", row.values[0], "|", round(val[0][0], 2))
-                   drop_cols.append(col.values[0])
+    under_sample = np.concatenate([failed_tests, random_normal_indices])
+    print("The length of under sampled data:",len(under_sample))
+    
+    undersample_data = lasso_data.iloc[under_sample, :]
+    x_us = undersample_data.drop(columns=['Pass/Fail'],axis=1)
+    y_us = undersample_data['Pass/Fail']
 
-            # Drop one of each pair of correlated columns
-        drops = set(drop_cols)
-        x = x.drop(columns=drops)
+    x_train, x_test, y_train, y_test = train_test_split(x_us, y_us, test_size = 0.2, random_state = 1)
 
-        return x       
-            
-    data = remove_collinear_features(data,0.70)
-    data = data.drop(columns = ['Time'], axis = 1)    
-    # separating the dependent and independent data
-    x = data.iloc[:,data.columns != 'Pass/Fail']
-    y = data.iloc[:, data.columns == 'Pass/Fail']
-        
-    print('Preprocessing data')
-    sm = SMOTE(random_state=42)
-    x, y = sm.fit_resample(x, y.values.ravel())
-    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.3, random_state=1)
-    sc = StandardScaler()
-    x_train = sc.fit_transform(x_train)
-    x_test = sc.transform(x_test)
-    print(x_train.shape)
-    print(y_train.shape)
-    print(x_test.shape)
-    print(y_test.shape)
- 
+    #print(x_train.shape)
+    #print(y_train.shape)
+    #print(x_test.shape)
+    #print(y_test.shape)
+    #data2=pd.concat([x_test,y_test])
+    #failed_tests = np.array(data2[data2['Pass/Fail'] == 1].index)
+    #no_failed_tests = len(failed_tests)
+    #print(no_failed_tests)
+   
     # Write output files to Valohai outputs directory
     # This enables Valohai to version your data
     # and upload output it to the default data store
