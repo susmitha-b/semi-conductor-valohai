@@ -3,6 +3,8 @@ import uuid
 import pandas as pd
 from sklearn.metrics import confusion_matrix,accuracy_score
 from sklearn.ensemble import RandomForestClassifier
+import seaborn as sns
+import matplotlib.pyplot as plt
 import joblib
 import valohai
 
@@ -34,18 +36,23 @@ def main():
   y_pred = rf.predict(x_test)
   print('Accuracy: %.3f' % accuracy_score(y_test, y_pred))
   test_accuracy_rf = accuracy_score(y_test, y_pred)
-  #rf.score(x_test,y_test)*100
+  test_accuarcy_rf_score=rf.score(x_test,y_test)*100
   
   with valohai.logger() as logger:
       logger.log('test_accuracy_rf', test_accuracy_rf)
+      logger.log('test_accuracy_rf_score', test_accuracy_rf_score)
       
-  # printing the confusion matrix
-  #cm = confusion_matrix(y_test_os, y_pred)
-  #sns.heatmap(cm, annot = True, cmap = 'rainbow')
-  #print("Accuracy: ", lr.score(x_test_os,y_test_os)*100)
-  #cm = confusion_matrix(y_test_os, y_pred)
-  #sns.heatmap(cm, annot = True, cmap = 'rainbow')
+  print("The confusion matrix")
+  cm = confusion_matrix(y_test, y_pred)
+  plt.rcParams['figure.figsize'] = (5, 5)
+  sns.set(style = 'dark', font_scale = 1.4)
+  sns.heatmap(cm, annot = True, annot_kws = {"size": 15})
+ 
   suffix = uuid.uuid4()
+  save_path = valohai.outputs().path('confusion_matrix.png')
+  plt.savefig(save_path)
+  plt.show()
+  plt.close()
   output_path = valohai.outputs().path('model_rf.pckl')
   joblib.dump(rf, open(output_path, 'wb'))
   #rf.save(output_path)
