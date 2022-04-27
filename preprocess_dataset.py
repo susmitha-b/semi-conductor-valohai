@@ -35,6 +35,7 @@ def main():
     print('Feature Selection using LassoCV started')
     reg=LassoCV()
     reg.fit(X,y)
+    print(reg.getparams(deep=True))
     print("Best Alpha using built-in LassoCV is: %f" % reg.alpha_)
     print("Best score using built-in LassoCV is: %f" %reg.score(X,y))
     coef=pd.Series(reg.coef_,index=X.columns)
@@ -46,8 +47,9 @@ def main():
         if coef[i]!=0:
             index.append(i)
     print("Selected columns from LassoCV is: ",index)
+   
     data1 = pd.DataFrame(X, columns=index)
-    
+    print(data1.info)
     print("Preparing for Undersampling")
     lasso_data=pd.concat([data1,y],axis=1)
     failed_tests = np.array(lasso_data[lasso_data['Pass/Fail'] == 1].index)
@@ -66,23 +68,14 @@ def main():
     print("The length of under sampled data:",len(under_sample))
     
     undersample_data = lasso_data.iloc[under_sample, :]
+    print(undersample_data.info)
     x_us = undersample_data.drop(columns=['Pass/Fail'],axis=1)
     y_us = undersample_data['Pass/Fail']
 
     x_train, x_test, y_train, y_test = train_test_split(x_us, y_us, test_size = 0.2, random_state = 1)
-
-    #print(x_train.shape)
-    #print(y_train.shape)
-    #print(x_test.shape)
-    #print(y_test.shape)
-    #data2=pd.concat([x_test,y_test])
-    #failed_tests = np.array(data2[data2['Pass/Fail'] == 1].index)
-    #no_failed_tests = len(failed_tests)
-    #print(no_failed_tests)
+    print(x_test.info)
+    print(x_train.info)
    
-    # Write output files to Valohai outputs directory
-    # This enables Valohai to version your data
-    # and upload output it to the default data store
     x_train = pd.DataFrame(x_train)
     x_test = pd.DataFrame(x_test)
     y_train = pd.DataFrame(y_train)
