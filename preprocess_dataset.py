@@ -31,9 +31,9 @@ def main():
        data = data.replace(np.NaN, 0)
     X = data.drop(columns=['Pass/Fail'],axis=1)
     y = data["Pass/Fail"]
-    print(X.describe())
+    
     print('Feature Selection using LassoCV started')
-    model = LassoCV()
+    model = LassoCV(max_iter=10000)
     model.fit(X,y)
     print(model.get_params(deep=True))
     print("Best Alpha using built-in LassoCV is: %f" % model.alpha_)
@@ -51,7 +51,6 @@ def main():
     selected_columns = [str(x) for x in column]
     X = pd.DataFrame(X, columns=selected_columns)
     
-    print(X.info)
     print("Preparing for Undersampling")
     lasso_data=pd.concat([X,y],axis=1)
     failed_tests = np.array(lasso_data[lasso_data['Pass/Fail'] == 1].index)
@@ -70,13 +69,10 @@ def main():
     print("The length of under sampled data:",len(under_sample))
     
     undersample_data = lasso_data.iloc[under_sample, :]
-    print(undersample_data.info)
     x_us = undersample_data.drop(columns=['Pass/Fail'],axis=1)
     y_us = undersample_data['Pass/Fail']
 
     x_train, x_test, y_train, y_test = train_test_split(x_us, y_us, test_size = 0.2, random_state = 1)
-    print(x_test.info)
-    print(x_train.info)
    
     x_train = pd.DataFrame(x_train)
     x_test = pd.DataFrame(x_test)
