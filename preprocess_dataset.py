@@ -35,7 +35,7 @@ def main():
     print('Feature Selection using LassoCV started')
     reg=LassoCV()
     reg.fit(X,y)
-    print(reg.getparams(deep=True))
+    print(reg.get_params(deep=True))
     print("Best Alpha using built-in LassoCV is: %f" % reg.alpha_)
     print("Best score using built-in LassoCV is: %f" %reg.score(X,y))
     coef=pd.Series(reg.coef_,index=X.columns)
