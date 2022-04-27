@@ -18,4 +18,4 @@ numpy==1.19.5
     #   tensorflow
 imblearn==0.0
 xgboost==1.5.2
-pickle==3.8
+joblib==1.1.0
