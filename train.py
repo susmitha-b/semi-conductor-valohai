@@ -26,7 +26,7 @@ def main():
   rf = RandomForestClassifier(n_estimators=100, random_state=1,verbose=0)
   rf.fit(x_train, y_train)
   y_pred2 = rf.predict(x_test)
-  test_accuracy_rf = rf.score(y_test,y_pred2)*100
+  test_accuracy_rf = rf.score(x_test,y_test)*100
   
   with valohai.logger() as logger:
       logger.log('test_accuracy_rf', test_accuracy_rf)
