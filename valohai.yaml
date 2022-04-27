@@ -17,11 +17,11 @@
       - python ./train.py {parameters}
     inputs:
       - name: dataset1
-        default: datum://018065d6-cd28-5216-6271-aa7c8d892ecc
+        default: datum://01806971-5724-09f4-2604-4ca1dda335b6
       - name: dataset2
-        default: datum://018065d6-d133-ac3b-9db9-b468c7bf9e34
+        default: datum://01806971-5a3f-726d-03da-15920ab9cade
       - name: dataset3
-        default: datum://018065d6-cf87-eff3-b24a-e692039ad468
+        default: datum://01806971-58b4-8257-dffe-3a2b02aef9c7
       - name: dataset4
-        default: datum://018065d6-d2d4-f51f-4916-29520631b971
+        default: datum://01806971-5bca-2dda-158b-15d70de54d9f
 
