@@ -1,5 +1,6 @@
 import uuid
 
+import pickle
 import pandas as pd
 from sklearn.metrics import confusion_matrix,accuracy_score
 from sklearn.ensemble import RandomForestClassifier
@@ -40,8 +41,9 @@ def main():
   #cm = confusion_matrix(y_test_os, y_pred)
   #sns.heatmap(cm, annot = True, cmap = 'rainbow')
   suffix = uuid.uuid4()
-  output_path = valohai.outputs().path('model_rf.h5')
-  rf.save(output_path)
+  output_path = valohai.outputs().path('model_rf.pckl')
+  pickle.dump(rf, open(output_path, 'wb'))
+  #rf.save(output_path)
 
 if __name__ == '__main__':
     main()
