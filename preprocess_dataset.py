@@ -31,9 +31,9 @@ def main():
        data = data.replace(np.NaN, 0)
     X = data.drop(columns=['Pass/Fail'],axis=1)
     y = data["Pass/Fail"]
-    
+    print(X.info())
     print('Feature Selection using LassoCV started')
-    reg=LassoCV(normalize='deprecated')
+    reg=LassoCV()
     reg.fit(X,y)
     print(reg.get_params(deep=True))
     print("Best Alpha using built-in LassoCV is: %f" % reg.alpha_)
