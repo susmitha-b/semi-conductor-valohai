@@ -1,7 +1,7 @@
 import uuid
 
 import pandas as pd
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix,accuracy_score
 from sklearn.ensemble import RandomForestClassifier
 import valohai
 
@@ -25,8 +25,10 @@ def main():
   
   rf = RandomForestClassifier(n_estimators=100, random_state=1,verbose=0)
   rf.fit(x_train, y_train)
-  y_pred2 = rf.predict(x_test)
-  test_accuracy_rf = rf.score(x_test,y_test)*100
+  y_pred = rf.predict(x_test)
+  print('Accuracy: %.3f' % accuracy_score(y_test, y_pred))
+  test_accuracy_rf = accuracy_score(y_test, y_pred)
+  #rf.score(x_test,y_test)*100
   
   with valohai.logger() as logger:
       logger.log('test_accuracy_rf', test_accuracy_rf)
