@@ -3,7 +3,7 @@ import uuid
 import pandas as pd
 from sklearn.metrics import confusion_matrix,accuracy_score
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.externals import joblib
+import joblib
 import valohai
 
 def main():
