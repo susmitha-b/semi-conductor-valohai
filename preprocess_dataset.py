@@ -69,8 +69,8 @@ def main():
     print("The length of under sampled data:",len(under_sample))
     
     undersample_data = lasso_data.iloc[under_sample, :]
-    x_us = undersample_data.drop(columns=['Pass/Fail'],axis=1)
-    y_us = undersample_data['Pass/Fail']
+    x_us = under_sample.iloc[:, under_sample.columns != 'Pass/Fail'] 
+    y_us = under_sample.iloc[:, under_sample.columns == 'Pass/Fail']
 
     x_train, x_test, y_train, y_test = train_test_split(x_us, y_us, test_size = 0.2, random_state = 1)
    
